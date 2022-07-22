@@ -7,8 +7,10 @@ package Modelos;
 import Clases.ClsCandidato;
 import Clases.ClsJdbc;
 import Clases.ClsMensaje;
+import Clases.ClsPropuesta;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 
 /**
@@ -45,6 +47,44 @@ public class MdlCandidato {
 
             if (resultado == 1) {
                 mensaje.CambiarMensaje(mensaje.OK, "Has creado un nuevo candidato");
+            } else {
+
+                mensaje.CambiarMensaje(mensaje.ERROR, "Error no encontrado");
+            }
+
+            return mensaje;
+
+        } catch (Exception e) {
+            mensaje.CambiarMensaje(mensaje.ERROR, "Excepción: " + e.getMessage());
+            return mensaje;
+        }
+
+    }
+
+    public ClsMensaje AgregarPropuesta(ClsPropuesta propuesta) {
+
+        ClsMensaje mensaje = new ClsMensaje();
+
+        try {
+
+            String sql = "INSERT INTO tbl_propuestas (id_candidato, fecha_creacion,"
+                    + " descripcion, sector) VALUES ( ?, now(), ?, ?)";
+
+            PreparedStatement sentencia = this.jdbc.conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            sentencia.setString(1, propuesta.getIdCandidato());
+            sentencia.setString(2, propuesta.getDescripcion());
+            sentencia.setString(3, propuesta.getSector());
+
+            int resultado = sentencia.executeUpdate();
+
+            if (resultado >= 1) {
+                mensaje.CambiarMensaje(mensaje.OK, "Has agregado una propuesta");
+
+                ResultSet rs = sentencia.getGeneratedKeys();
+                if (rs.next()) {
+                    mensaje.setData(rs.getString(1) + "");
+                }
+
             } else {
 
                 mensaje.CambiarMensaje(mensaje.ERROR, "Error no encontrado");
@@ -115,6 +155,39 @@ public class MdlCandidato {
         } catch (Exception e) {
             mensaje.CambiarMensaje(mensaje.ERROR, "Excepción: " + e.getMessage());
             return mensaje;
+        }
+
+    }
+
+    public LinkedList<ClsPropuesta> ObtenerPropuestas(String idCandidato) {
+
+        try {
+
+            LinkedList<ClsPropuesta> listaPropuestas = new LinkedList<>();
+
+            String sql = "SELECT * FROM tbl_propuestas WHERE id_candidato = " + idCandidato;
+            PreparedStatement sentencia = this.jdbc.conexion.prepareStatement(sql);
+            ResultSet resultados = sentencia.executeQuery();
+
+            while (resultados.next()) {
+
+                String id = resultados.getString("id_propuesta");
+                String fechaCreacion = resultados.getString("fecha_creacion");
+                String descripcion = resultados.getString("descripcion");
+                String sector = resultados.getString("sector");
+
+                ClsPropuesta propuesta = new ClsPropuesta(idCandidato, id, sector, descripcion, fechaCreacion);
+
+                listaPropuestas.add(propuesta);
+
+            }
+
+            return listaPropuestas;
+
+        } catch (Exception e) {
+
+            System.out.println("Uy error" + e.getMessage());
+            return null;
         }
 
     }

@@ -6,6 +6,7 @@ package Vistas;
 
 import Clases.ClsCandidato;
 import Clases.ClsMensaje;
+import Clases.ClsPropuesta;
 import Controladores.CtlCandidato;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
@@ -54,6 +55,22 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
 
     }
 
+    public void ActualizarTablaPropuestas(LinkedList<ClsPropuesta> lista) {
+
+        DefaultTableModel model = (DefaultTableModel) this.tablaPropuestas.getModel();
+
+        model.setRowCount(0);
+
+        for (ClsPropuesta propuesta : lista) {
+
+            Object[] row = {propuesta.getIdPropuesta(), propuesta.getSector(),
+                propuesta.getDescripcion()};
+            model.addRow(row);
+
+        }
+
+    }
+
     public ClsCandidato BuscarCandidato(String id) {
 
         for (ClsCandidato candidato : this.candidatos) {
@@ -77,6 +94,8 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -101,10 +120,43 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
         tablaCandidatos = new javax.swing.JTable();
         botonEliminar = new javax.swing.JButton();
         botonIrEditar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        labelSector = new javax.swing.JLabel();
+        comboSector = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        campoDescripcionPropuesta = new javax.swing.JTextArea();
+        botonAgregarPropuesta = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaPropuestas = new javax.swing.JTable();
+        botonEliminarPropuesta = new javax.swing.JButton();
+        botonEditarPropuesta = new javax.swing.JButton();
+        botonActualizarPropuesta = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Gestión de candidato");
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jLabel2.setText("Número cédula");
 
@@ -188,7 +240,7 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
                                 .addComponent(botonActualizar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(botonNuevo)))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +267,7 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAgregar)
                     .addComponent(botonActualizar)
@@ -259,7 +311,7 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonIrEditar)
@@ -276,21 +328,127 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonEliminar)
                     .addComponent(botonIrEditar))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Lista", jPanel2);
+
+        labelSector.setText("Sector");
+
+        comboSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Salud", "Seguridad", "Agrícultura", "TI", "Hacienda" }));
+
+        jLabel8.setText("Propuesta");
+
+        campoDescripcionPropuesta.setColumns(20);
+        campoDescripcionPropuesta.setRows(5);
+        jScrollPane3.setViewportView(campoDescripcionPropuesta);
+
+        botonAgregarPropuesta.setText("+");
+        botonAgregarPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarPropuestaActionPerformed(evt);
+            }
+        });
+
+        tablaPropuestas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Id", "Sector", "Propuesta"
+            }
+        ));
+        jScrollPane5.setViewportView(tablaPropuestas);
+
+        jScrollPane6.setViewportView(jScrollPane5);
+
+        botonEliminarPropuesta.setText("-");
+
+        botonEditarPropuesta.setText("Editar");
+
+        botonActualizarPropuesta.setText("Guardar");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelSector)
+                            .addComponent(comboSector, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(botonAgregarPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(botonActualizarPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(botonEliminarPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(botonEditarPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jSeparator1)
+                        .addContainerGap())))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelSector)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(botonAgregarPropuesta)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonActualizarPropuesta)))
+                .addGap(32, 32, 32)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(botonEliminarPropuesta)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonEditarPropuesta)))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Propuestas", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,9 +543,9 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
 
         String partido = this.comboPartido.getSelectedItem().toString();
         candidato.setPartidoPolitico(correo);
-        
+
         ClsMensaje mensaje = this.controlador.ActualizarCandidato(candidato);
-        
+
         if (mensaje.getTipo().equals(mensaje.OK)) {
             this.ObtenerCandidatos();
         }
@@ -410,6 +568,58 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
         this.campoCorreo.setText("");
         this.campoDescripcion.setText("");
     }//GEN-LAST:event_botonNuevoActionPerformed
+
+    private void botonAgregarPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarPropuestaActionPerformed
+
+        String sector = this.comboSector.getSelectedItem().toString();
+        String descripcion = this.campoDescripcionPropuesta.getText();
+
+        int column = 0;
+        int row = this.tablaCandidatos.getSelectedRow();
+        String cedula = this.tablaCandidatos.getModel().getValueAt(row, column).toString();
+        ClsCandidato candidato = this.BuscarCandidato(cedula);
+
+        if (candidato != null) {
+            ClsPropuesta propuesta = new ClsPropuesta(cedula, sector, descripcion);
+
+            ClsMensaje respuesta = this.controlador.AgregarPropuesta(propuesta);
+
+            if (respuesta.getTipo().equals(ClsMensaje.OK)) {
+                propuesta.setIdPropuesta(respuesta.getData());
+                candidato.getPropuestas().add(propuesta);
+                this.ActualizarTablaPropuestas(candidato.getPropuestas());
+            }
+
+        }
+
+
+    }//GEN-LAST:event_botonAgregarPropuestaActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+
+        int index = this.jTabbedPane1.getSelectedIndex();
+        if (index == 2) {
+
+            int column = 0;
+            int row = this.tablaCandidatos.getSelectedRow();
+            String idCandidato = this.tablaCandidatos.getModel().getValueAt(row, column).toString();
+
+            ClsCandidato candidato = this.BuscarCandidato(idCandidato);
+
+            if (candidato != null) {
+                
+                LinkedList<ClsPropuesta> propuestas = this.controlador.ObtenerPropuestas(idCandidato);
+
+                if (propuestas != null) {
+                    candidato.setPropuestas(propuestas);
+                    this.ActualizarTablaPropuestas(candidato.getPropuestas());
+                }
+
+            }
+        }
+
+
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -448,16 +658,22 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
+    private javax.swing.JButton botonActualizarPropuesta;
     private javax.swing.JButton botonAgregar;
+    private javax.swing.JButton botonAgregarPropuesta;
+    private javax.swing.JButton botonEditarPropuesta;
     private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonEliminarPropuesta;
     private javax.swing.JButton botonIrEditar;
     private javax.swing.JButton botonNuevo;
     private javax.swing.JTextField campoCorreo;
     private javax.swing.JTextArea campoDescripcion;
+    private javax.swing.JTextArea campoDescripcionPropuesta;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoNumeroCedula;
     private javax.swing.JTextField campoTelefono;
     private javax.swing.JComboBox<String> comboPartido;
+    private javax.swing.JComboBox<String> comboSector;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -465,11 +681,21 @@ public class FrameGestorCandidato extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelSector;
     private javax.swing.JTable tablaCandidatos;
+    private javax.swing.JTable tablaPropuestas;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,12 +10,13 @@ package Clases;
  */
 public class ClsMensaje {
 
-    public final String OK = "OK";
-    public final String ERROR = "ERROR";
-    public final String ADVERTENCIA = "ADVERTENCIA";
+    public static final String OK = "OK";
+    public static final String ERROR = "ERROR";
+    public static final String ADVERTENCIA = "ADVERTENCIA";
 
     private String tipo;
     private String descripcion;
+    private String data;
 
     public ClsMensaje() {
 
@@ -33,6 +34,15 @@ public class ClsMensaje {
     public String getDescripcion() {
         return descripcion;
     }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+    
     
     
 
